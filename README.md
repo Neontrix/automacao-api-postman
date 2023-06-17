@@ -45,7 +45,7 @@ postman_tests:
         name: postman/newman:alpine
         entrypoint: [""]
     trigger:
-       project: xx/xxxx/xxxxxx
+       project: automated-tests/Prodesp.DO.Admin.Edition
        branch: automated-tests
     script:
         - newman --version
