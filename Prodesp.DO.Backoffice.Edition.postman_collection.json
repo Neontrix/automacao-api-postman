@@ -7,6 +7,307 @@
 	},
 	"item": [
 		{
+			"name": "ResidualCleaner",
+			"item": [
+				{
+					"name": "Pesquisa e Exclusão de Seção",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"for (var i=0; i<jsonData.items.length; i++){\r",
+									"    pm.test('Total de Seções: ' + jsonData.items.length + '. Deletar Seção > ' + (i+1) , function(){\r",
+									"            let baseUrl = pm.globals.get(\"urlAdminEdition\")\r",
+									"            var idSectionCleaner = jsonData.items[i].id;\r",
+									"        pm.sendRequest({\r",
+									"            url: `${baseUrl}/v1/sections/${idSectionCleaner}`,\r",
+									"            method: 'DELETE'\r",
+									"        },\r",
+									"            function(err, res){ \r",
+									"                if(pm.response.to.have.status(200)){\r",
+									"                    console.log(res);\r",
+									"                    console.log(\"Limpeza realizada!\")\r",
+									"                }else if(pm.response.to.have.status(500)){\r",
+									"                    pm.test(\"Não foi possível limpar sujeira de seção na base, código 500. Tentando realizar limpeza\", function(){\r",
+									"                        console.log(err);     \r",
+									"                        while(pm.response.to.have.status(500)){\r",
+									"                            pm.sendRequest({\r",
+									"                                url: `${baseUrl}/v1/sections/${idSectionCleaner}`,\r",
+									"                                method: 'DELETE'\r",
+									"                            })\r",
+									"                        }\r",
+									"                        pm.response.to.have.status(200);\r",
+									"                        console.log(\"Tentativa de limpeza realizada com sucesso!\");\r",
+									"                    })\r",
+									"                }\r",
+									"            }\r",
+									"        )\r",
+									"    })\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{urlAdminEdition}}/v1/sections/filter?Name=qapi",
+							"host": [
+								"{{urlAdminEdition}}"
+							],
+							"path": [
+								"v1",
+								"sections",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "Name",
+									"value": "qapi"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pesquisa e Exclusão de Caderno",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"for (var i=0; i<jsonData.items.length; i++){\r",
+									"    pm.test('Total de Cadernos: ' + jsonData.items.length + '. Deletar Caderno > ' + (i+1) , function(){\r",
+									"            let baseUrl = pm.globals.get(\"urlAdminEdition\")\r",
+									"            var idJournalCleaner = jsonData.items[i].id;\r",
+									"        pm.sendRequest({\r",
+									"            url: `${baseUrl}/v1/journals/${idJournalCleaner}`,\r",
+									"            method: 'DELETE'\r",
+									"        },\r",
+									"            function(err, res){ \r",
+									"                if(pm.response.to.have.status(200)){\r",
+									"                    console.log(res);\r",
+									"                    console.log(\"Limpeza realizada!\")\r",
+									"                }else if(pm.response.to.have.status(500)){\r",
+									"                    pm.test(\"Não foi possível limpar sujeira de caderno na base, código 500. Tentando realizar limpeza\", function(){\r",
+									"                        console.log(err);     \r",
+									"                        while(pm.response.to.have.status(500)){\r",
+									"                            pm.sendRequest({\r",
+									"                                url: `${baseUrl}/v1/journals/${idJournalCleaner}`,\r",
+									"                                method: 'DELETE'\r",
+									"                            })\r",
+									"                        }\r",
+									"                        pm.response.to.have.status(200);\r",
+									"                        console.log(\"Tentativa de limpeza realizada com sucesso!\");\r",
+									"                    })\r",
+									"                }\r",
+									"            }\r",
+									"        )\r",
+									"    })\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{urlAdminEdition}}/v1/journals/filter?Name=qapi",
+							"host": [
+								"{{urlAdminEdition}}"
+							],
+							"path": [
+								"v1",
+								"journals",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "Name",
+									"value": "qapi"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pesquisa e Exclusão de Tema Caderno",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"for (var i=0; i<jsonData.items.length; i++){\r",
+									"    pm.test('Total de Tema de Cadernos: ' + jsonData.items.length + '. Deletar Tema > ' + (i+1) , function(){\r",
+									"            let baseUrl = pm.globals.get(\"urlAdminEdition\")\r",
+									"            var idJournalThemeCleaner = jsonData.items[i].id;\r",
+									"        pm.sendRequest({\r",
+									"            url: `${baseUrl}/v1/journal-themes/${idJournalThemeCleaner}`,\r",
+									"            method: 'DELETE'\r",
+									"        },\r",
+									"            function(err, res){ \r",
+									"                if(pm.response.to.have.status(200)){\r",
+									"                    console.log(res);\r",
+									"                    console.log(\"Limpeza realizada!\")\r",
+									"                }else if(pm.response.to.have.status(500)){\r",
+									"                    pm.test(\"Não foi possível limpar sujeira de tema de caderno na base, código 500. Tentando realizar limpeza\", function(){\r",
+									"                        console.log(err);     \r",
+									"                        while(pm.response.to.have.status(500)){\r",
+									"                            pm.sendRequest({\r",
+									"                                url: `${baseUrl}/v1/journal-themes/${idJournalThemeCleaner}`,\r",
+									"                                method: 'DELETE'\r",
+									"                            })\r",
+									"                        }\r",
+									"                        pm.response.to.have.status(200);\r",
+									"                        console.log(\"Tentativa de limpeza realizada com sucesso!\");\r",
+									"                    })\r",
+									"                }\r",
+									"            }\r",
+									"        )\r",
+									"    })\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{urlAdminEdition}}/v1/journal-themes/filter?Name=qapi",
+							"host": [
+								"{{urlAdminEdition}}"
+							],
+							"path": [
+								"v1",
+								"journal-themes",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "Name",
+									"value": "qapi"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pesquisa e Exclusão de Tipo de Publicação",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"for (var i=0; i<jsonData.items.length; i++){\r",
+									"    pm.test('Total de Tipos de Publicações: ' + jsonData.items.length + '. Deletar Tipo de Publicação > ' + (i+1) , function(){\r",
+									"            let baseUrl = pm.globals.get(\"urlAdminEdition\")\r",
+									"            var idPublicationTypeCleaner = jsonData.items[i].id;\r",
+									"        pm.sendRequest({\r",
+									"            url: `${baseUrl}/v1/publication-types/${idPublicationTypeCleaner}`,\r",
+									"            method: 'DELETE'\r",
+									"        },\r",
+									"            function(err, res){ \r",
+									"                if(pm.response.to.have.status(200)){\r",
+									"                    console.log(res);\r",
+									"                    console.log(\"Limpeza realizada!\")\r",
+									"                }else if(pm.response.to.have.status(500)){\r",
+									"                    pm.test(\"Não foi possível limpar sujeira de tipo de publicação na base, código 500. Tentando realizar limpeza\", function(){\r",
+									"                        console.log(err);     \r",
+									"                        while(pm.response.to.have.status(500)){\r",
+									"                            pm.sendRequest({\r",
+									"                                url: `${baseUrl}/v1/publication-types/${idPublicationTypeCleaner}`,\r",
+									"                                method: 'DELETE'\r",
+									"                            })\r",
+									"                        }\r",
+									"                        pm.response.to.have.status(200);\r",
+									"                        console.log(\"Tentativa de limpeza realizada com sucesso!\");\r",
+									"                    })\r",
+									"                }\r",
+									"            }\r",
+									"        )\r",
+									"    })\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{urlAdminEdition}}/v1/publication-types/filter?Name=qapi",
+							"host": [
+								"{{urlAdminEdition}}"
+							],
+							"path": [
+								"v1",
+								"publication-types",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "Name",
+									"value": "qapi"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "PublicationType",
 			"item": [
 				{
